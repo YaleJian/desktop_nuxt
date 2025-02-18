@@ -1,0 +1,31 @@
+{
+  "title": "网址导航",
+  "description": "多服务器功能聚合网页",
+  "categories": [
+    {
+      "name": "技术社区",
+      "links": [
+        {
+          "title": "GitHub",
+          "url": "https://github.com",
+          "icon": "https://icon.horse/icon/github.com"
+        },
+        {
+          "title": "Stack Overflow",
+          "url": "https://stackoverflow.com",
+          "icon": "https://icon.horse/icon/stackoverflow.com"
+        }
+      ]
+    },
+    {
+      "name": "AI工具",
+      "links": [
+        {
+          "title": "ChatGPT",
+          "url": "https://chat.openai.com",
+          "icon": "https://icon.horse/icon/chat.openai.com"
+        }
+      ]
+    }
+  ]
+}
