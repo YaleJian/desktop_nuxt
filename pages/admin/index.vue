@@ -8,9 +8,6 @@
                 :disabled="saving">
           {{ saving ? '保存中...' : '保存更改' }}
         </button>
-        <button @click="logout" class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600">
-          退出登录
-        </button>
       </div>
     </div>
 
@@ -221,17 +218,6 @@ function addLink(category) {
 // 删除链接
 function removeLink(category, linkIndex) {
   category.links.splice(linkIndex, 1)
-}
-
-// 退出登录
-async function logout() {
-  const auth = useAuth()
-  const { success } = await auth.logout()
-  if (success) {
-    router.push('/login')
-  } else {
-    console.error('退出登录失败')
-  }
 }
 
 // 页面加载时获取数据

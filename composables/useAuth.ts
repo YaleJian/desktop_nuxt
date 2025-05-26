@@ -6,7 +6,7 @@ export const useAuth = () => {
     const checkAuth = async () => {
         try {
             const { data } = await useFetch('/api/auth/check')
-            isAuthenticated.value = data.value?.authenticated || false
+            isAuthenticated.value = Boolean(data.value?.authenticated) || false
             if (isAuthenticated.value) {
                 user.value = data.value?.user || { username: 'admin' }
             } else {

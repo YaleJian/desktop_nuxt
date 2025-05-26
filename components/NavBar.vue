@@ -11,17 +11,17 @@
         </div>
         
         <div class="flex items-center">
-          <NuxtLink v-if="auth.isAuthenticated" 
+          <NuxtLink v-if="auth.isAuthenticated.value"
                    to="/admin" 
                    class="ml-4 px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-blue-600">
             管理后台
           </NuxtLink>
-          <NuxtLink v-if="!auth.isAuthenticated && !isLoginPage" 
+          <NuxtLink v-if="!auth.isAuthenticated.value && !isLoginPage"
                    to="/login" 
                    class="ml-4 px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-blue-600">
             登录
           </NuxtLink>
-          <button v-if="auth.isAuthenticated"
+          <button v-if="auth.isAuthenticated.value"
                   @click="handleLogout"
                   class="ml-4 px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-red-600">
             退出
