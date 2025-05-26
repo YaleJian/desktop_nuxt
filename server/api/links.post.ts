@@ -1,6 +1,12 @@
 import { NavCategory, ApiResponse } from '../type/nav'
 
 export default defineEventHandler(async (event): Promise<ApiResponse> => {
+    // Check authentication
+    const authToken = getCookie(event, 'auth_token')
+    if (!authToken) {
+        return { success: false, error: '未授权操作' }
+    }
+    
     const body = await readBody<{ categories: NavCategory[] }>(event)
 
     // 数据校验
@@ -21,7 +27,13 @@ export default defineEventHandler(async (event): Promise<ApiResponse> => {
     }
 
     try {
-        saveData(body.categories)
+        // Read existing data to preserve title and description
+        const existingData = readData()
+        saveData({
+            title: existingData.title,
+            description: existingData.description,
+            categories: body.categories
+        })
         return { success: true }
     } catch (error) {
         return { success: false, error: '数据保存失败' }
