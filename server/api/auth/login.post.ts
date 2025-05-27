@@ -17,7 +17,8 @@ export default defineEventHandler(async (event: H3Event) => {
       httpOnly: true,
       path: '/',
       maxAge: 60 * 60 * 24 * 7, // 7 days
-      secure: process.env.NODE_ENV === 'production'
+      secure: false, // 允许HTTP传输cookie
+      sameSite: 'lax' // 更灵活的跨站点cookie行为
     })
     
     return { success: true, user: { username: 'admin' } }
