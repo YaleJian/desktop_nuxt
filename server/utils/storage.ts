@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 
-const dataPath = path.join(process.cwd(), 'data/links.json')
+const dataPath = path.join(process.cwd(), 'public/links.json')
 
 export const readData = () => {
     return JSON.parse(fs.readFileSync(dataPath, 'utf-8'))
