@@ -6,10 +6,10 @@
   <div v-else>
     <div class="text-center p-8">
       <h1 class="text-5xl font-bold bg-gradient-to-r from-blue-600 via-purple-500 to-pink-500 bg-clip-text text-transparent mb-4">
-        {{data?.title}}
+        {{navData.title}}
       </h1>
       <p class="text-gray-500 text-lg font-light">
-        {{data?.description}}
+        {{navData.description}}
       </p>
     </div>
 
@@ -40,29 +40,44 @@
 </template>
 
 <script setup>
-// 使用原生fetch API获取数据
 const pending = ref(true)
-const linkData = ref(null)
+const navData = ref({
+  title: '',
+  description: '',
+  categories: []
+})
 
-onMounted(async () => {
-  try {
-    const response = await fetch('/links.json')
-    linkData.value = await response.json()
-  } catch (error) {
-    console.error('Error loading data:', error)
-  } finally {
+// 加载数据
+const { data: apiData, error: apiError } = await useFetch('/api/links', {
+  key: 'nav-data',
+  server: true, // 允许在服务器端渲染时预取
+  lazy: false, // 不延迟加载
+  immediate: true // 立即获取
+})
+
+// 监听数据变化
+watch(apiData, (newData) => {
+  if (newData) {
+    navData.value = newData
     pending.value = false
+  }
+}, { immediate: true }) // 立即执行一次
+
+// 如果有错误，记录错误
+watch(apiError, (err) => {
+  if (err) {
+    console.error('加载数据失败:', err)
+    // 可以在这里设置一个错误状态并显示给用户
   }
 })
 
-const data = computed(() => linkData.value)
 const searchQuery = ref('')
 
 // 处理搜索过滤
 const filteredCategories = computed(() => {
-  if (!data.value?.categories) return []
+  if (!navData.value.categories) return []
   
-  return data.value.categories.map(category => ({
+  return navData.value.categories.map(category => ({
     ...category,
     links: category.links.filter(link =>
         link.title.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
